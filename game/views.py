@@ -435,6 +435,7 @@ def verify_otp(request):
                 del request.session['registration_otp_hash']
 
                 login(request, user)
+                request.session.cycle_key()
                 return redirect('index')
             except User.DoesNotExist:
                 messages.error(
@@ -456,6 +457,7 @@ def login_view(request):
         if form.is_valid():
             user = form.get_user()
             login(request, user)
+            request.session.cycle_key()
             return redirect('index')
     else:
         form = AuthenticationForm()
