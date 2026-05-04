@@ -73,6 +73,7 @@
             const gameOverAIBtn = document.getElementById('gameOverAIBtn');
 
             const resignBtn = document.getElementById('resignBtn');
+            const homeBtn = document.getElementById('homeBtn');
             const drawBtn = document.getElementById('drawBtn');
             const drawOverlay = document.getElementById('drawOverlay');
             const drawMessage = document.getElementById('drawMessage');
@@ -868,6 +869,21 @@
                 if (!gameOver && !paused) {
                     showConfirm("Resign?", "Are you sure you want to resign?", () => endGame('resign', turn));
                 }
+            };
+
+            if (homeBtn) homeBtn.onclick = () => {
+                showConfirm(
+                    "Leave Game?",
+                    "Your current progress will be lost.<br>Are you sure you want to return to the home screen?",
+                    () => {
+                        clearInterval(timerInterval);
+                        timerInterval = null;
+                        paused = false;
+                        gameOver = false;
+                        gameLayout.style.visibility = 'hidden';
+                        welcomeOverlay.classList.add('active');
+                    }
+                );
             };
 
             if (drawBtn) drawBtn.onclick = offerDraw;
